@@ -1,0 +1,89 @@
+.custom-node {
+  padding: 29px 23px;
+  border-radius: 20px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  /* justify-items: center;
+  justify-self: center; */
+  align-items: center;
+  /* align-self: center;
+  align-content: center; */
+  width: 310px;
+  min-height: 30px;
+  height: fit-content;
+  font-size: 32.5px;
+  font-weight: 600;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.node-content {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.react-flow__handle {
+  width: 8px;
+  height: 8px;
+  background-color: #1976d2;
+}
+
+.react-flow__handle-top {
+  top: -4px;
+}
+
+.react-flow__handle-bottom {
+  bottom: -4px;
+}
+
+@keyframes dashedAnimation {
+  to {
+    stroke-dashoffset: -70;
+  }
+}
+
+.react-flow__edge-path {
+  stroke: #959595;
+  stroke-width: 3.5;
+  /* stroke-dasharray: 20, 4;
+  animation: dashedAnimation 1.5s linear infinite; */
+}
+
+/* ReactFlow background color */
+.react-flow {
+  background-color: transparent;
+}
+
+/* Style controls */
+.react-flow__controls {
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1px;
+  size: 20px;
+  transform: scale(0.8);
+  transform-origin: bottom left;
+}
+
+.react-flow__controls-button {
+  width: 22px;
+  height: 22px;
+  margin-top:5px;
+  background-color: #fafafa;
+  border: 1px solid #414141;
+  border-radius: 10px;
+  color: #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-flow__controls-button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.react-flow__controls-button:hover {
+  background-color: #f0f0f0;
+}

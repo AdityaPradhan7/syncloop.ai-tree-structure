@@ -1,0 +1,27 @@
+.flow-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Style for when the flow is embedded in another container */
+.embedded-flow {
+  width: 100%;
+  height: 100%;
+  min-height: 400px; /* Minimum recommended height */
+  position: relative;
+}
+
+/* React Flow needs explicit heights for all its container elements */
+.react-flow {
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure react-flow__viewport takes up full container space */
+.react-flow__viewport {
+  width: 100%;
+  height: 100%;
+} 

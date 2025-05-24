@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syncloop.ai Diagram</title>
+    <script type="text/javascript">
+      var template = {
+  "name": "Application",
+  "description": "An organization managing digital travel and user services.",
+  "business_teams": [
+    {
+      "business_team_1": {
+        "name": "TravelOperationsTeam",
+        "description": "Handles all travel-related operations such as flight, hotel, and car bookings.",
+        "agents": [
+          {
+            "agent_1": {
+              "name": "FlightBookingAgent",
+              "description": "Agent responsible for managing flight bookings.",
+              "tools": [
+                {
+                  "tool_1": {
+                    "name": "FlightSearchTool",
+                    "description": "Tool used to search and book flights.",
+                    "apis": [
+                      {
+                        "api_1": {
+                          "name": "SearchFlightsAPI",
+                          "description": "Search available flights",
+                          "method": "GET",
+                          "endpoint": "/flights/search",
+                          "payload": "{}",
+                          "input_params": "origin, destination, date",
+                          "output_params": "flight_details"
+                        }
+                      },
+                      {
+                        "api_2": {
+                          "name": "BookFlightAPI",
+                          "description": "Book selected flight",
+                          "method": "POST",
+                          "endpoint": "/flights/book",
+                          "payload": "{flightId, userDetails}",
+                          "input_params": "flightId, userDetails",
+                          "output_params": "bookingConfirmation"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "agent_2": {
+              "name": "HotelReservationAgent",
+              "description": "Agent responsible for managing hotel reservations.",
+              "tools": [
+                {
+                  "tool_1": {
+                    "name": "HotelSearchAndBookingTool",
+                    "description": "Tool used to search and book hotels.",
+                    "apis": [
+                      {
+                        "api_1": {
+                          "name": "SearchHotelsAPI",
+                          "description": "Search available hotels",
+                          "method": "GET",
+                          "endpoint": "/hotels/search",
+                          "payload": "{}",
+                          "input_params": "location, dates",
+                          "output_params": "hotel_list"
+                        }
+                      },
+                      {
+                        "api_2": {
+                          "name": "BookHotelAPI",
+                          "description": "Reserve selected hotel room",
+                          "method": "POST",
+                          "endpoint": "/hotels/book",
+                          "payload": "{hotelId, userDetails, roomDetails}",
+                          "input_params": "hotelId, userDetails, roomDetails",
+                          "output_params": "reservationConfirmation"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "agent_3": {
+              "name": "CarRentalAgent",
+              "description": "Agent responsible for managing car rentals.",
+              "tools": [
+                {
+                  "tool_1": {
+                    "name": "CarRentalTool",
+                    "description": "Tool used to search and book rental cars.",
+                    "apis": [
+                      {
+                        "api_1": {
+                          "name": "SearchRentalCarsAPI",
+                          "description": "Search available rental cars",
+                          "method": "GET",
+                          "endpoint": "/cars/search",
+                          "payload": "{}",
+                          "input_params": "location, dates",
+                          "output_params": "car_list"
+                        }
+                      },
+                      {
+                        "api_2": {
+                          "name": "BookCarAPI",
+                          "description": "Book selected rental car",
+                          "method": "POST",
+                          "endpoint": "/cars/book",
+                          "payload": "{carId, userDetails, rentalDetails}",
+                          "input_params": "carId, userDetails, rentalDetails",
+                          "output_params": "rentalConfirmation"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "business_team_2": {
+        "name": "UserManagementAndSecurityTeam",
+        "description": "Handles user authentication, registration, and security operations.",
+        "agents": [
+          {
+            "agent_1": {
+              "name": "UserAuthenticationAgent",
+              "description": "Agent responsible for user login and registration.",
+              "tools": [
+                {
+                  "tool_1": {
+                    "name": "UserAuthTool",
+                    "description": "Tool used for user authentication and registration.",
+                    "apis": [
+                      {
+                        "api_1": {
+                          "name": "UserLoginAPI",
+                          "description": "Authenticate user login",
+                          "method": "POST",
+                          "endpoint": "/users/auth/login",
+                          "payload": "{username, password}",
+                          "input_params": "username, password",
+                          "output_params": "authToken"
+                        }
+                      },
+                      {
+                        "api_2": {
+                          "name": "UserRegistrationAPI",
+                          "description": "Register new user",
+                          "method": "POST",
+                          "endpoint": "/users/auth/register",
+                          "payload": "{userDetails}",
+                          "input_params": "userDetails",
+                          "output_params": "registrationStatus"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "business_team_3": {
+        "name": "PaymentProcessingTeam",
+        "description": "Manages all payment-related services and operations.",
+        "agents": [
+          {
+            "agent_1": {
+              "name": "PaymentAgent",
+              "description": "Agent responsible for processing user payments.",
+              "tools": [
+                {
+                  "tool_1": {
+                    "name": "PaymentProcessingTool",
+                    "description": "Tool used for handling payments for bookings.",
+                    "apis": [
+                      {
+                        "api_1": {
+                          "name": "ProcessPaymentAPI",
+                          "description": "Process user payments for bookings",
+                          "method": "POST",
+                          "endpoint": "/payments/process",
+                          "payload": "{bookingId, paymentDetails}",
+                          "input_params": "bookingId, paymentDetails",
+                          "output_params": "paymentConfirmation"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+};
+    </script>
+    
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
