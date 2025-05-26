@@ -1,9 +1,10 @@
 import type { Node, Edge } from 'reactflow';
-import data from '../data/data.json';
+//import data from '../data/data.json';
 
 interface NodeData {
   label: string;
   hidden?: boolean;
+  nodeId?: string;
 }
 
 // Define interfaces for hierarchy objects
@@ -44,7 +45,49 @@ interface TeamObject {
 
 interface Hierarchy {
   name: string;
+  id?: string;
   teams: TeamObject[];
+}
+
+// Define types to match the JSON structure
+interface ApiData {
+  name: string;
+  id: string;
+  description?: string;
+  method?: string;
+  endpoint?: string;
+  payload?: string;
+  input_params?: string;
+  output_params?: string;
+  [key: string]: any;
+}
+
+interface ToolData {
+  name: string;
+  id: string;
+  description?: string;
+  apis?: { [key: string]: ApiData }[];
+  [key: string]: any;
+}
+
+interface AgentData {
+  name: string;
+  id: string;
+  description?: string;
+  tools?: { [key: string]: ToolData }[];
+  [key: string]: any;
+}
+
+interface TeamData {
+  name: string;
+  id: string;
+  description?: string;
+  agents?: { [key: string]: AgentData }[];
+  [key: string]: any;
+}
+
+interface BusinessTeam {
+  [key: string]: TeamData;
 }
 
 // Define types to match the JSON structure - loosely typed with optional fields
@@ -77,7 +120,7 @@ export const processData = () => {
   // Configuration for spacing
   const baseHorizontalSpacing = 300; // Spacing for sibling nodes with no children
   const apiHorizontalSpacing = 410;  // Spacing between API nodes
-  const verticalSpacing = 230;       // Spacing between levels
+  const verticalSpacing = 235;       // Spacing between levels
   
   // Track node positions and names for labels
   const nodeInfo: {
@@ -110,9 +153,11 @@ export const processData = () => {
   // Starting x position for the first API node
   let currentApiX = 100;
 
+  const data = window.template;
+
   // Create a structured representation of the hierarchy for bottom-up processing
   const hierarchy: Hierarchy = {
-    name: data.name || "Organization", // Get root name from JSON or default to "Organization"
+    name: data.name || "Application", // Get root name from JSON or default to "Application"
     teams: [],
   };
 
@@ -385,7 +430,7 @@ export const processData = () => {
     }
   });
 
-  // Step 5: Position root node at average of Team nodes or at center if no teams
+    // Step 5: Position root node at average of Team nodes or at center if no teams
   if (hierarchy.teams.length > 0) {
     const teamXSum = hierarchy.teams.reduce((sum, team) => {
       // Only include teams that have positions calculated
@@ -404,7 +449,7 @@ export const processData = () => {
       name: hierarchy.name,
     };
   } else {
-    // If there are no teams or no team positions, place root node at center
+    // If there are no API nodes (shouldn't happen due to anchor nodes), place root node at center
     const centerX = 400; // Default center position
     
     // Store root node at center position
@@ -421,7 +466,10 @@ export const processData = () => {
   nodes.push({
     id: 'root',
     type: 'customNode',
-    data: { label: nodeInfo.root?.name || data.name || "Organization" },
+    data: { 
+      label: nodeInfo.root?.name || data.name || "Organization",
+      nodeId: data.id
+    },
     position: { x: nodeInfo.root?.x || 400, y: nodeInfo.root?.y || levels.root },
   });
 
@@ -435,10 +483,80 @@ export const processData = () => {
     
     // Add to nodes array if it's not an anchor
     if (!isAnchor) {
+      // Get the corresponding data from the JSON based on node type and ID
+      let nodeId;
+      const nodeType = info.id.split('-')[0];
+      const nodeNumber = parseInt(info.id.split('-')[1]);
+
+      if (nodeType === 'team' && data.business_teams) {
+        const team = data.business_teams[nodeNumber - 1];
+        if (team) {
+          const teamKey = Object.keys(team)[0];
+          nodeId = (team as any)[teamKey]?.id;
+        }
+      } else if (nodeType === 'agent') {
+        // Search through all teams to find the agent
+        let agentCount = 0;
+        data.business_teams?.forEach((team: any) => {
+          const teamKey = Object.keys(team)[0];
+          team[teamKey]?.agents?.forEach((agent: any) => {
+            agentCount++;
+            if (agentCount === nodeNumber) {
+              const agentKey = Object.keys(agent)[0];
+              if (agent[agentKey]?.id) {
+                nodeId = agent[agentKey].id;
+              }
+            }
+          });
+        });
+      } else if (nodeType === 'tool') {
+        // Search through all teams and agents to find the tool
+        let toolCount = 0;
+        data.business_teams?.forEach((team: any) => {
+          const teamKey = Object.keys(team)[0];
+          team[teamKey]?.agents?.forEach((agent: any) => {
+            const agentKey = Object.keys(agent)[0];
+            agent[agentKey]?.tools?.forEach((tool: any) => {
+              toolCount++;
+              if (toolCount === nodeNumber) {
+                const toolKey = Object.keys(tool)[0];
+                if (tool[toolKey]?.id) {
+                  nodeId = tool[toolKey].id;
+                }
+              }
+            });
+          });
+        });
+      } else if (nodeType === 'api') {
+        // Search through all teams, agents, and tools to find the API
+        let apiCount = 0;
+        data.business_teams?.forEach((team: any) => {
+          const teamKey = Object.keys(team)[0];
+          team[teamKey]?.agents?.forEach((agent: any) => {
+            const agentKey = Object.keys(agent)[0];
+            agent[agentKey]?.tools?.forEach((tool: any) => {
+              const toolKey = Object.keys(tool)[0];
+              tool[toolKey]?.apis?.forEach((api: any) => {
+                apiCount++;
+                if (apiCount === nodeNumber) {
+                  const apiKey = Object.keys(api)[0];
+                  if (api[apiKey]?.id) {
+                    nodeId = api[apiKey].id;
+                  }
+                }
+              });
+            });
+          });
+        });
+      }
+
       nodes.push({
         id: info.id,
         type: 'customNode',
-        data: { label: info.name },
+        data: { 
+          label: info.name,
+          nodeId: nodeId
+        },
         position: { x: info.x, y: info.y },
       });
     }

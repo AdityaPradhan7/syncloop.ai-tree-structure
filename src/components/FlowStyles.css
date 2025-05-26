@@ -1,7 +1,6 @@
 .custom-node {
   padding: 29px 23px;
   border-radius: 20px;
-  color: #ffffff;
   display: flex;
   justify-content: center;
   /* justify-items: center;
@@ -12,10 +11,10 @@
   width: 310px;
   min-height: 30px;
   height: fit-content;
-  font-size: 32.5px;
-  font-weight: 600;
   text-align: center;
-  font-family: sans-serif;
+  font-weight: 500;
+  font-size: 36px;
+  color: #333333;
 }
 
 .node-content {
@@ -27,7 +26,7 @@
 .react-flow__handle {
   width: 8px;
   height: 8px;
-  background-color: #1976d2;
+  background-color: #5a6d86;
 }
 
 .react-flow__handle-top {
@@ -45,21 +44,21 @@
 }
 
 .react-flow__edge-path {
-  stroke: #959595;
-  stroke-width: 3.5;
+  stroke: #5a6d86;
+  stroke-width: 2.6;
   /* stroke-dasharray: 20, 4;
   animation: dashedAnimation 1.5s linear infinite; */
 }
 
 /* ReactFlow background color */
 .react-flow {
-  background-color: transparent;
+  background-color: #f3f3f3;
 }
 
 /* Style controls */
 .react-flow__controls {
   border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0);
   padding: 1px;
   size: 20px;
   transform: scale(0.8);

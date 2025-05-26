@@ -7,27 +7,32 @@
     <title>Syncloop.ai Diagram</title>
     <script type="text/javascript">
       var template = {
-  "name": "Application",
+  "name": "Travel Booking",
+  "id": "App name",
   "description": "An organization managing digital travel and user services.",
   "business_teams": [
     {
       "business_team_1": {
-        "name": "TravelOperationsTeam",
+        "name": "Travel Operations",
+        "id": "Team TM-0001",
         "description": "Handles all travel-related operations such as flight, hotel, and car bookings.",
         "agents": [
           {
             "agent_1": {
-              "name": "FlightBookingAgent",
+              "name": "Flight Booking",
+              "id": "Agent AG-0001",
               "description": "Agent responsible for managing flight bookings.",
               "tools": [
                 {
                   "tool_1": {
-                    "name": "FlightSearchTool",
+                    "name": "Flight Search",
+                    "id": "Tool TL-0001",
                     "description": "Tool used to search and book flights.",
                     "apis": [
                       {
                         "api_1": {
-                          "name": "SearchFlightsAPI",
+                          "name": "Search Flights",
+                          "id": "API-0001",
                           "description": "Search available flights",
                           "method": "GET",
                           "endpoint": "/flights/search",
@@ -38,7 +43,8 @@
                       },
                       {
                         "api_2": {
-                          "name": "BookFlightAPI",
+                          "name": "Book Flight",
+                          "id": "API-0002",
                           "description": "Book selected flight",
                           "method": "POST",
                           "endpoint": "/flights/book",
@@ -55,17 +61,20 @@
           },
           {
             "agent_2": {
-              "name": "HotelReservationAgent",
+              "name": "Hotel Reservation",
+              "id": "Agent AG-0002",
               "description": "Agent responsible for managing hotel reservations.",
               "tools": [
                 {
                   "tool_1": {
-                    "name": "HotelSearchAndBookingTool",
+                    "name": "Hotel Search And Booking",
+                    "id": "Tool TL-0002",
                     "description": "Tool used to search and book hotels.",
                     "apis": [
                       {
                         "api_1": {
-                          "name": "SearchHotelsAPI",
+                          "name": "Search Hotels",
+                          "id": "API-0003",
                           "description": "Search available hotels",
                           "method": "GET",
                           "endpoint": "/hotels/search",
@@ -76,7 +85,8 @@
                       },
                       {
                         "api_2": {
-                          "name": "BookHotelAPI",
+                          "name": "Book Hotel",
+                          "id": "API-0004",
                           "description": "Reserve selected hotel room",
                           "method": "POST",
                           "endpoint": "/hotels/book",
@@ -93,17 +103,20 @@
           },
           {
             "agent_3": {
-              "name": "CarRentalAgent",
+              "name": "Car Rental",
+              "id": "Agent AG-0003",
               "description": "Agent responsible for managing car rentals.",
               "tools": [
                 {
                   "tool_1": {
-                    "name": "CarRentalTool",
+                    "name": "Car Rental",
+                    "id": "Tool TL-0003",
                     "description": "Tool used to search and book rental cars.",
                     "apis": [
                       {
                         "api_1": {
-                          "name": "SearchRentalCarsAPI",
+                          "name": "Search Rental Cars",
+                          "id": "API-0005",
                           "description": "Search available rental cars",
                           "method": "GET",
                           "endpoint": "/cars/search",
@@ -114,7 +127,8 @@
                       },
                       {
                         "api_2": {
-                          "name": "BookCarAPI",
+                          "name": "Book Car",
+                          "id": "API-0006",
                           "description": "Book selected rental car",
                           "method": "POST",
                           "endpoint": "/cars/book",
@@ -134,22 +148,26 @@
     },
     {
       "business_team_2": {
-        "name": "UserManagementAndSecurityTeam",
+        "name": "User Management And Security",
+        "id": "Team TM-0002",
         "description": "Handles user authentication, registration, and security operations.",
         "agents": [
           {
             "agent_1": {
-              "name": "UserAuthenticationAgent",
+              "name": "User Authentication",
+              "id": "Agent AG-0004",
               "description": "Agent responsible for user login and registration.",
               "tools": [
                 {
                   "tool_1": {
-                    "name": "UserAuthTool",
+                    "name": "User Auth",
+                    "id": "Tool TL-0004",
                     "description": "Tool used for user authentication and registration.",
                     "apis": [
                       {
                         "api_1": {
-                          "name": "UserLoginAPI",
+                          "name": "User Login",
+                          "id": "API-0007",
                           "description": "Authenticate user login",
                           "method": "POST",
                           "endpoint": "/users/auth/login",
@@ -160,7 +178,8 @@
                       },
                       {
                         "api_2": {
-                          "name": "UserRegistrationAPI",
+                          "name": "User Registration",
+                          "id": "API-0008",
                           "description": "Register new user",
                           "method": "POST",
                           "endpoint": "/users/auth/register",
@@ -180,22 +199,26 @@
     },
     {
       "business_team_3": {
-        "name": "PaymentProcessingTeam",
+        "name": "Payment Processing",
+        "id": "Team TM-0003",
         "description": "Manages all payment-related services and operations.",
         "agents": [
           {
             "agent_1": {
-              "name": "PaymentAgent",
+              "name": "Payment",
+              "id": "Agent AG-0005",
               "description": "Agent responsible for processing user payments.",
               "tools": [
                 {
                   "tool_1": {
-                    "name": "PaymentProcessingTool",
+                    "name": "Payment Processing",
+                    "id": "Tool TL-0005",
                     "description": "Tool used for handling payments for bookings.",
                     "apis": [
                       {
                         "api_1": {
-                          "name": "ProcessPaymentAPI",
+                          "name": "Process Payment",
+                          "id": "API-0009",
                           "description": "Process user payments for bookings",
                           "method": "POST",
                           "endpoint": "/payments/process",
@@ -214,7 +237,7 @@
       }
     }
   ]
-};
+}
     </script>
     
   </head>

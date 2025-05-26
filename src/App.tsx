@@ -15,7 +15,7 @@ import NodeDetailsPanel from './components/NodeDetailsPanel';
 import { processData } from './utils/processData';
 import './components/FlowStyles.css';
 import './components/FlowContainer.css';
-import data from './data/data.json';
+// import data from './data/data.json';
 
 // Define node types
 const nodeTypes = {
@@ -58,6 +58,8 @@ const getNodeTypeDisplay = (nodeType: string): string => {
 
 // Function to extract node details from JSON
 const extractNodeDetails = () => {
+  let data = window.template;
+
   try {
     // Extract root node details
     nodeDetailsMap['root'] = {
@@ -258,12 +260,12 @@ function App() {
           proOptions={{ hideAttribution: true }}
           minZoom={0.2}
         >
-          <Background 
+          {/* <Background 
             variant={BackgroundVariant.Dots}
             gap={16}      
             size={1}       
             color="#212121"
-          />
+          /> */}
           <Controls />
         </ReactFlow>
         
