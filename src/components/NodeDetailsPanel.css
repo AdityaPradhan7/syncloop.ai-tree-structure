@@ -35,16 +35,22 @@
   font-size: 20px;
   font-weight: 600;
   color: #333;
+  font-family: "Figtree";
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 .close-button {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 26px;
   cursor: pointer;
   color: #666;
   padding: 0px;
   margin-right: 10px;
+  font-family: "Figtree";
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 .close-button:hover {
@@ -64,6 +70,9 @@
   color: #606060;
   font-weight: 400;
   font-size: 14px;
+  font-family: "Figtree";
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 /* Customize scrollbar */
@@ -97,6 +106,9 @@
   color: #606060;
   font-weight: 400;
   font-size: 14px;
+  font-family: "Figtree";
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 .node-details-field input,
@@ -110,6 +122,9 @@
   font-weight: 500;
   width: 100%;
   box-sizing: border-box;
+  font-family: "Figtree";
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 input:focus,

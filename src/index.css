@@ -13,8 +13,4 @@ html, body, #root {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  font-family: "Figtree";
-  font-optical-sizing: auto;
-  font-style: normal;
 }
-

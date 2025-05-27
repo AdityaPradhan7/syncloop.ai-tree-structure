@@ -52,6 +52,9 @@ const CustomNode = ({ data, id }: NodeProps<CustomNodeData>) => {
             fontSize: '21.4px',
             marginLeft: '10px',
             fontWeight: '500',
+            fontFamily: "Figtree",
+            fontOpticalSizing: 'auto',
+            fontStyle: 'normal',
           }}
         >
           {data.nodeId}

@@ -15,6 +15,9 @@
   font-weight: 500;
   font-size: 36px;
   color: #333333;
+  font-family: "Figtree";
+  font-optical-sizing: auto;
+  font-style: normal;
 }
 
 .node-content {
