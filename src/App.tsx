@@ -58,7 +58,7 @@ const getNodeTypeDisplay = (nodeType: string): string => {
 
 // Function to extract node details from JSON
 const extractNodeDetails = () => {
-  let data = window.template;
+  let data = (window as any).template;
 
   try {
     // Extract root node details
@@ -84,10 +84,7 @@ const extractNodeDetails = () => {
     
     // Extract team details
     if (data.business_teams && Array.isArray(data.business_teams)) {
-      data.business_teams.forEach((teamEntry: any) => {
-        const teamKey = Object.keys(teamEntry)[0];
-        const team = teamEntry[teamKey];
-        
+      data.business_teams.forEach((team: any) => {
         if (team && team.name) {
           const teamId = `team-${teamCounter}`;
           teamIds[teamCounter] = teamId;
@@ -104,10 +101,7 @@ const extractNodeDetails = () => {
           
           // Extract agent details
           if (team.agents && Array.isArray(team.agents)) {
-            team.agents.forEach((agentEntry: any) => {
-              const agentKey = Object.keys(agentEntry)[0];
-              const agent = agentEntry[agentKey];
-              
+            team.agents.forEach((agent: any) => {
               if (agent && agent.name) {
                 const agentId = `agent-${agentCounter}`;
                 agentIds[agentCounter] = agentId;
@@ -124,10 +118,7 @@ const extractNodeDetails = () => {
                 
                 // Extract tool details
                 if (agent.tools && Array.isArray(agent.tools)) {
-                  agent.tools.forEach((toolEntry: any) => {
-                    const toolKey = Object.keys(toolEntry)[0];
-                    const tool = toolEntry[toolKey];
-                    
+                  agent.tools.forEach((tool: any) => {
                     if (tool && tool.name) {
                       const toolId = `tool-${toolCounter}`;
                       toolIds[toolCounter] = toolId;
@@ -144,10 +135,7 @@ const extractNodeDetails = () => {
                       
                       // Extract API details
                       if (tool.apis && Array.isArray(tool.apis)) {
-                        tool.apis.forEach((apiEntry: any) => {
-                          const apiKey = Object.keys(apiEntry)[0];
-                          const api = apiEntry[apiKey];
-                          
+                        tool.apis.forEach((api: any) => {
                           if (api && api.name) {
                             const apiId = `api-${apiCounter}`;
                             apiIds[apiCounter] = apiId;

@@ -12,229 +12,185 @@
   "description": "An organization managing digital travel and user services.",
   "business_teams": [
     {
-      "business_team_1": {
-        "name": "Travel Operations",
-        "id": "Team TM-0001",
-        "description": "Handles all travel-related operations such as flight, hotel, and car bookings.",
-        "agents": [
-          {
-            "agent_1": {
-              "name": "Flight Booking",
-              "id": "Agent AG-0001",
-              "description": "Agent responsible for managing flight bookings.",
-              "tools": [
+      "name": "Travel Operations",
+      "id": "Team TM-0001",
+      "description": "Handles all travel-related operations such as flight, hotel, and car bookings.",
+      "agents": [
+        {
+          "name": "Flight Booking",
+          "id": "Agent AG-0001",
+          "description": "Agent responsible for managing flight bookings.",
+          "tools": [
+            {
+              "name": "Flight Search",
+              "id": "Tool TL-0001",
+              "description": "Tool used to search and book flights.",
+              "apis": [
                 {
-                  "tool_1": {
-                    "name": "Flight Search",
-                    "id": "Tool TL-0001",
-                    "description": "Tool used to search and book flights.",
-                    "apis": [
-                      {
-                        "api_1": {
-                          "name": "Search Flights",
-                          "id": "API-0001",
-                          "description": "Search available flights",
-                          "method": "GET",
-                          "endpoint": "/flights/search",
-                          "payload": "{}",
-                          "input_params": "origin, destination, date",
-                          "output_params": "flight_details"
-                        }
-                      },
-                      {
-                        "api_2": {
-                          "name": "Book Flight",
-                          "id": "API-0002",
-                          "description": "Book selected flight",
-                          "method": "POST",
-                          "endpoint": "/flights/book",
-                          "payload": "{flightId, userDetails}",
-                          "input_params": "flightId, userDetails",
-                          "output_params": "bookingConfirmation"
-                        }
-                      }
-                    ]
-                  }
+                  "name": "Search Flights",
+                  "id": "API-0001",
+                  "description": "Search available flights",
+                  "method": "GET",
+                  "endpoint": "/flights/search",
+                  "payload": "{}",
+                  "input_params": "origin, destination, date",
+                  "output_params": "flight_details"
+                },
+                {
+                  "name": "Book Flight",
+                  "id": "API-0002",
+                  "description": "Book selected flight",
+                  "method": "POST",
+                  "endpoint": "/flights/book",
+                  "payload": "{flightId, userDetails}",
+                  "input_params": "flightId, userDetails",
+                  "output_params": "bookingConfirmation"
                 }
               ]
             }
-          },
-          {
-            "agent_2": {
-              "name": "Hotel Reservation",
-              "id": "Agent AG-0002",
-              "description": "Agent responsible for managing hotel reservations.",
-              "tools": [
+          ]
+        },
+        {
+          "name": "Hotel Reservation",
+          "id": "Agent AG-0002",
+          "description": "Agent responsible for managing hotel reservations.",
+          "tools": [
+            {
+              "name": "Hotel Search And Booking",
+              "id": "Tool TL-0002",
+              "description": "Tool used to search and book hotels.",
+              "apis": [
                 {
-                  "tool_1": {
-                    "name": "Hotel Search And Booking",
-                    "id": "Tool TL-0002",
-                    "description": "Tool used to search and book hotels.",
-                    "apis": [
-                      {
-                        "api_1": {
-                          "name": "Search Hotels",
-                          "id": "API-0003",
-                          "description": "Search available hotels",
-                          "method": "GET",
-                          "endpoint": "/hotels/search",
-                          "payload": "{}",
-                          "input_params": "location, dates",
-                          "output_params": "hotel_list"
-                        }
-                      },
-                      {
-                        "api_2": {
-                          "name": "Book Hotel",
-                          "id": "API-0004",
-                          "description": "Reserve selected hotel room",
-                          "method": "POST",
-                          "endpoint": "/hotels/book",
-                          "payload": "{hotelId, userDetails, roomDetails}",
-                          "input_params": "hotelId, userDetails, roomDetails",
-                          "output_params": "reservationConfirmation"
-                        }
-                      }
-                    ]
-                  }
+                  "name": "Search Hotels",
+                  "id": "API-0003",
+                  "description": "Search available hotels",
+                  "method": "GET",
+                  "endpoint": "/hotels/search",
+                  "payload": "{}",
+                  "input_params": "location, dates",
+                  "output_params": "hotel_list"
+                },
+                {
+                  "name": "Book Hotel",
+                  "id": "API-0004",
+                  "description": "Reserve selected hotel room",
+                  "method": "POST",
+                  "endpoint": "/hotels/book",
+                  "payload": "{hotelId, userDetails, roomDetails}",
+                  "input_params": "hotelId, userDetails, roomDetails",
+                  "output_params": "reservationConfirmation"
                 }
               ]
             }
-          },
-          {
-            "agent_3": {
+          ]
+        },
+        {
+          "name": "Car Rental",
+          "id": "Agent AG-0003",
+          "description": "Agent responsible for managing car rentals.",
+          "tools": [
+            {
               "name": "Car Rental",
-              "id": "Agent AG-0003",
-              "description": "Agent responsible for managing car rentals.",
-              "tools": [
+              "id": "Tool TL-0003",
+              "description": "Tool used to search and book rental cars.",
+              "apis": [
                 {
-                  "tool_1": {
-                    "name": "Car Rental",
-                    "id": "Tool TL-0003",
-                    "description": "Tool used to search and book rental cars.",
-                    "apis": [
-                      {
-                        "api_1": {
-                          "name": "Search Rental Cars",
-                          "id": "API-0005",
-                          "description": "Search available rental cars",
-                          "method": "GET",
-                          "endpoint": "/cars/search",
-                          "payload": "{}",
-                          "input_params": "location, dates",
-                          "output_params": "car_list"
-                        }
-                      },
-                      {
-                        "api_2": {
-                          "name": "Book Car",
-                          "id": "API-0006",
-                          "description": "Book selected rental car",
-                          "method": "POST",
-                          "endpoint": "/cars/book",
-                          "payload": "{carId, userDetails, rentalDetails}",
-                          "input_params": "carId, userDetails, rentalDetails",
-                          "output_params": "rentalConfirmation"
-                        }
-                      }
-                    ]
-                  }
+                  "name": "Search Rental Cars",
+                  "id": "API-0005",
+                  "description": "Search available rental cars",
+                  "method": "GET",
+                  "endpoint": "/cars/search",
+                  "payload": "{}",
+                  "input_params": "location, dates",
+                  "output_params": "car_list"
+                },
+                {
+                  "name": "Book Car",
+                  "id": "API-0006",
+                  "description": "Book selected rental car",
+                  "method": "POST",
+                  "endpoint": "/cars/book",
+                  "payload": "{carId, userDetails, rentalDetails}",
+                  "input_params": "carId, userDetails, rentalDetails",
+                  "output_params": "rentalConfirmation"
                 }
               ]
             }
-          }
-        ]
-      }
+          ]
+        }
+      ]
     },
     {
-      "business_team_2": {
-        "name": "User Management And Security",
-        "id": "Team TM-0002",
-        "description": "Handles user authentication, registration, and security operations.",
-        "agents": [
-          {
-            "agent_1": {
-              "name": "User Authentication",
-              "id": "Agent AG-0004",
-              "description": "Agent responsible for user login and registration.",
-              "tools": [
+      "name": "User Management And Security",
+      "id": "Team TM-0002",
+      "description": "Handles user authentication, registration, and security operations.",
+      "agents": [
+        {
+          "name": "User Authentication",
+          "id": "Agent AG-0004",
+          "description": "Agent responsible for user login and registration.",
+          "tools": [
+            {
+              "name": "User Auth",
+              "id": "Tool TL-0004",
+              "description": "Tool used for user authentication and registration.",
+              "apis": [
                 {
-                  "tool_1": {
-                    "name": "User Auth",
-                    "id": "Tool TL-0004",
-                    "description": "Tool used for user authentication and registration.",
-                    "apis": [
-                      {
-                        "api_1": {
-                          "name": "User Login",
-                          "id": "API-0007",
-                          "description": "Authenticate user login",
-                          "method": "POST",
-                          "endpoint": "/users/auth/login",
-                          "payload": "{username, password}",
-                          "input_params": "username, password",
-                          "output_params": "authToken"
-                        }
-                      },
-                      {
-                        "api_2": {
-                          "name": "User Registration",
-                          "id": "API-0008",
-                          "description": "Register new user",
-                          "method": "POST",
-                          "endpoint": "/users/auth/register",
-                          "payload": "{userDetails}",
-                          "input_params": "userDetails",
-                          "output_params": "registrationStatus"
-                        }
-                      }
-                    ]
-                  }
+                  "name": "User Login",
+                  "id": "API-0007",
+                  "description": "Authenticate user login",
+                  "method": "POST",
+                  "endpoint": "/users/auth/login",
+                  "payload": "{username, password}",
+                  "input_params": "username, password",
+                  "output_params": "authToken"
+                },
+                {
+                  "name": "User Registration",
+                  "id": "API-0008",
+                  "description": "Register new user",
+                  "method": "POST",
+                  "endpoint": "/users/auth/register",
+                  "payload": "{userDetails}",
+                  "input_params": "userDetails",
+                  "output_params": "registrationStatus"
                 }
               ]
             }
-          }
-        ]
-      }
+          ]
+        }
+      ]
     },
     {
-      "business_team_3": {
-        "name": "Payment Processing",
-        "id": "Team TM-0003",
-        "description": "Manages all payment-related services and operations.",
-        "agents": [
-          {
-            "agent_1": {
-              "name": "Payment",
-              "id": "Agent AG-0005",
-              "description": "Agent responsible for processing user payments.",
-              "tools": [
+      "name": "Payment Processing",
+      "id": "Team TM-0003",
+      "description": "Manages all payment-related services and operations.",
+      "agents": [
+        {
+          "name": "Payment",
+          "id": "Agent AG-0005",
+          "description": "Agent responsible for processing user payments.",
+          "tools": [
+            {
+              "name": "Payment Processing",
+              "id": "Tool TL-0005",
+              "description": "Tool used for handling payments for bookings.",
+              "apis": [
                 {
-                  "tool_1": {
-                    "name": "Payment Processing",
-                    "id": "Tool TL-0005",
-                    "description": "Tool used for handling payments for bookings.",
-                    "apis": [
-                      {
-                        "api_1": {
-                          "name": "Process Payment",
-                          "id": "API-0009",
-                          "description": "Process user payments for bookings",
-                          "method": "POST",
-                          "endpoint": "/payments/process",
-                          "payload": "{bookingId, paymentDetails}",
-                          "input_params": "bookingId, paymentDetails",
-                          "output_params": "paymentConfirmation"
-                        }
-                      }
-                    ]
-                  }
+                  "name": "Process Payment",
+                  "id": "API-0009",
+                  "description": "Process user payments for bookings",
+                  "method": "POST",
+                  "endpoint": "/payments/process",
+                  "payload": "{bookingId, paymentDetails}",
+                  "input_params": "bookingId, paymentDetails",
+                  "output_params": "paymentConfirmation"
                 }
               ]
             }
-          }
-        ]
-      }
+          ]
+        }
+      ]
     }
   ]
 }

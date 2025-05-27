@@ -11,8 +11,8 @@ interface NodeData {
 interface ApiObject {
   name: string;
   id: string;
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   hidden?: boolean;
 }
 
@@ -20,8 +20,6 @@ interface ToolObject {
   name: string;
   id: string;
   apis: ApiObject[];
-  x?: number;
-  y?: number;
   hidden?: boolean;
 }
 
@@ -29,8 +27,6 @@ interface AgentObject {
   name: string;
   id: string;
   tools: ToolObject[];
-  x?: number;
-  y?: number;
   hidden?: boolean;
 }
 
@@ -59,31 +55,27 @@ interface ApiData {
   payload?: string;
   input_params?: string;
   output_params?: string;
-  [key: string]: any;
 }
 
 interface ToolData {
   name: string;
   id: string;
   description?: string;
-  apis?: { [key: string]: ApiData }[];
-  [key: string]: any;
+  apis?: ApiData[];
 }
 
 interface AgentData {
   name: string;
   id: string;
   description?: string;
-  tools?: { [key: string]: ToolData }[];
-  [key: string]: any;
+  tools?: ToolData[];
 }
 
 interface TeamData {
   name: string;
   id: string;
   description?: string;
-  agents?: { [key: string]: AgentData }[];
-  [key: string]: any;
+  agents?: AgentData[];
 }
 
 interface BusinessTeam {
@@ -118,9 +110,9 @@ export const processData = () => {
   const edges: Edge[] = [];
   
   // Configuration for spacing
-  const baseHorizontalSpacing = 300; // Spacing for sibling nodes with no children
-  const apiHorizontalSpacing = 410;  // Spacing between API nodes
-  const verticalSpacing = 235;       // Spacing between levels
+  const baseHorizontalSpacing = 300;
+  const apiHorizontalSpacing = 410;
+  const verticalSpacing = 235;
   
   // Track node positions and names for labels
   const nodeInfo: {
@@ -136,10 +128,10 @@ export const processData = () => {
   
   // Track level heights (y-coordinates)
   const levels = {
-    api: verticalSpacing * 4,    // 480
-    tool: verticalSpacing * 3,   // 360
-    agent: verticalSpacing * 2,  // 240
-    team: verticalSpacing,       // 120
+    api: verticalSpacing * 4,
+    tool: verticalSpacing * 3,
+    agent: verticalSpacing * 2,
+    team: verticalSpacing,
     root: 0,
   };
   
@@ -153,11 +145,11 @@ export const processData = () => {
   // Starting x position for the first API node
   let currentApiX = 100;
 
-  const data = window.template;
+  const data = (window as any).template;
 
   // Create a structured representation of the hierarchy for bottom-up processing
   const hierarchy: Hierarchy = {
-    name: data.name || "Application", // Get root name from JSON or default to "Application"
+    name: data.name || "Application",
     teams: [],
   };
 
@@ -166,35 +158,27 @@ export const processData = () => {
   
   // First pass - build hierarchy structure and add API nodes
   if (hasTeams) {
-    data.business_teams.forEach((team) => {
-      const teamKey = Object.keys(team)[0];
-      const teamData = team[teamKey as keyof typeof team];
-      if (!teamData || !teamData.name) return;
+    data.business_teams.forEach((team: TeamData) => {
+      if (!team || !team.name) return;
       
       const teamObj: TeamObject = {
-        name: teamData.name,
+        name: team.name,
         id: `team-${teamNodeCounter++}`,
         agents: [],
       };
       
-      if (teamData.agents) {
-        teamData.agents.forEach((agent) => {
-          const agentKey = Object.keys(agent)[0];
-          const agentData = agent[agentKey as keyof typeof agent];
-          if (!agentData || !agentData.name) return;
+      if (team.agents && Array.isArray(team.agents)) {
+        team.agents.forEach((agent: AgentData) => {
+          if (!agent || !agent.name) return;
           
           const agentObj: AgentObject = {
-            name: agentData.name,
+            name: agent.name,
             id: `agent-${agentNodeCounter++}`,
             tools: [],
           };
           
-          if (agentData.tools) {
-            // Use any[] to avoid TypeScript errors with the dynamic structure
-            agentData.tools.forEach((toolEntry: any) => {
-              // Extract the tool using its key (e.g., "tool_1")
-              const toolKey = Object.keys(toolEntry)[0];
-              const tool = toolEntry[toolKey];
+          if (agent.tools && Array.isArray(agent.tools)) {
+            agent.tools.forEach((tool: ToolData) => {
               if (!tool || !tool.name) return;
               
               const toolObj: ToolObject = {
@@ -206,11 +190,7 @@ export const processData = () => {
               let hasApis = false;
               
               if (tool.apis && Array.isArray(tool.apis)) {
-                // Use any[] to avoid TypeScript errors with the dynamic structure
-                tool.apis.forEach((apiEntry: any) => {
-                  // Extract the API using its key (e.g., "api_1")
-                  const apiKey = Object.keys(apiEntry)[0];
-                  const api = apiEntry[apiKey];
+                tool.apis.forEach((api: ApiData) => {
                   if (!api || !api.name) return;
                   
                   hasApis = true;
@@ -261,8 +241,8 @@ export const processData = () => {
                 // Add anchor to the tool's apis
                 toolObj.apis.push(anchorApiObj);
                 
-                // Increment X position for next node
-                currentApiX += baseHorizontalSpacing;
+                // Increment X position for next node using apiHorizontalSpacing for consistency
+                currentApiX += apiHorizontalSpacing;
               }
               
               // Add tool to agent
@@ -274,7 +254,7 @@ export const processData = () => {
           if (agentObj.tools.length === 0) {
             const anchorId = `anchor-agent-${anchorNodeCounter++}`;
             const anchorToolObj: ToolObject = {
-              name: `${agentData.name} Anchor`,
+              name: `${agent.name} Anchor`,
               id: anchorId,
               apis: [],
               hidden: true,
@@ -283,7 +263,7 @@ export const processData = () => {
             // Create an anchor API node for this tool
             const anchorApiId = `anchor-api-${anchorNodeCounter++}`;
             const anchorApiObj: ApiObject = {
-              name: `${agentData.name} API Anchor`,
+              name: `${agent.name} API Anchor`,
               id: anchorApiId,
               x: currentApiX,
               y: levels.api,
@@ -295,7 +275,7 @@ export const processData = () => {
               id: anchorApiId,
               x: currentApiX,
               y: levels.api,
-              name: `${agentData.name} API Anchor`,
+              name: `${agent.name} API Anchor`,
               hidden: true,
             };
             
@@ -305,8 +285,8 @@ export const processData = () => {
             // Add anchor tool to agent
             agentObj.tools.push(anchorToolObj);
             
-            // Increment X position for next node
-            currentApiX += baseHorizontalSpacing;
+            // Increment X position for next node using apiHorizontalSpacing for consistency
+            currentApiX += apiHorizontalSpacing;
           }
           
           // Add agent to team
@@ -318,7 +298,7 @@ export const processData = () => {
       if (teamObj.agents.length === 0) {
         const anchorId = `anchor-team-${anchorNodeCounter++}`;
         const anchorAgentObj: AgentObject = {
-          name: `${teamData.name} Anchor`,
+          name: `${team.name} Anchor`,
           id: anchorId,
           tools: [],
           hidden: true,
@@ -327,7 +307,7 @@ export const processData = () => {
         // Create an anchor tool node for this agent
         const anchorToolId = `anchor-tool-${anchorNodeCounter++}`;
         const anchorToolObj: ToolObject = {
-          name: `${teamData.name} Tool Anchor`,
+          name: `${team.name} Tool Anchor`,
           id: anchorToolId,
           apis: [],
           hidden: true,
@@ -336,7 +316,7 @@ export const processData = () => {
         // Create an anchor API node for this tool
         const anchorApiId = `anchor-api-${anchorNodeCounter++}`;
         const anchorApiObj: ApiObject = {
-          name: `${teamData.name} API Anchor`,
+          name: `${team.name} API Anchor`,
           id: anchorApiId,
           x: currentApiX,
           y: levels.api,
@@ -348,7 +328,7 @@ export const processData = () => {
           id: anchorApiId,
           x: currentApiX,
           y: levels.api,
-          name: `${teamData.name} API Anchor`,
+          name: `${team.name} API Anchor`,
           hidden: true,
         };
         
@@ -361,8 +341,8 @@ export const processData = () => {
         // Add anchor agent to team
         teamObj.agents.push(anchorAgentObj);
         
-        // Increment X position for next node
-        currentApiX += baseHorizontalSpacing;
+        // Increment X position for next node using apiHorizontalSpacing for consistency
+        currentApiX += apiHorizontalSpacing;
       }
       
       // Add team to hierarchy
@@ -491,38 +471,28 @@ export const processData = () => {
       if (nodeType === 'team' && data.business_teams) {
         const team = data.business_teams[nodeNumber - 1];
         if (team) {
-          const teamKey = Object.keys(team)[0];
-          nodeId = (team as any)[teamKey]?.id;
+          nodeId = team.id;
         }
       } else if (nodeType === 'agent') {
         // Search through all teams to find the agent
         let agentCount = 0;
-        data.business_teams?.forEach((team: any) => {
-          const teamKey = Object.keys(team)[0];
-          team[teamKey]?.agents?.forEach((agent: any) => {
+        data.business_teams?.forEach((team: TeamData) => {
+          team.agents?.forEach((agent: AgentData) => {
             agentCount++;
             if (agentCount === nodeNumber) {
-              const agentKey = Object.keys(agent)[0];
-              if (agent[agentKey]?.id) {
-                nodeId = agent[agentKey].id;
-              }
+              nodeId = agent.id;
             }
           });
         });
       } else if (nodeType === 'tool') {
         // Search through all teams and agents to find the tool
         let toolCount = 0;
-        data.business_teams?.forEach((team: any) => {
-          const teamKey = Object.keys(team)[0];
-          team[teamKey]?.agents?.forEach((agent: any) => {
-            const agentKey = Object.keys(agent)[0];
-            agent[agentKey]?.tools?.forEach((tool: any) => {
+        data.business_teams?.forEach((team: TeamData) => {
+          team.agents?.forEach((agent: AgentData) => {
+            agent.tools?.forEach((tool: ToolData) => {
               toolCount++;
               if (toolCount === nodeNumber) {
-                const toolKey = Object.keys(tool)[0];
-                if (tool[toolKey]?.id) {
-                  nodeId = tool[toolKey].id;
-                }
+                nodeId = tool.id;
               }
             });
           });
@@ -530,19 +500,13 @@ export const processData = () => {
       } else if (nodeType === 'api') {
         // Search through all teams, agents, and tools to find the API
         let apiCount = 0;
-        data.business_teams?.forEach((team: any) => {
-          const teamKey = Object.keys(team)[0];
-          team[teamKey]?.agents?.forEach((agent: any) => {
-            const agentKey = Object.keys(agent)[0];
-            agent[agentKey]?.tools?.forEach((tool: any) => {
-              const toolKey = Object.keys(tool)[0];
-              tool[toolKey]?.apis?.forEach((api: any) => {
+        data.business_teams?.forEach((team: TeamData) => {
+          team.agents?.forEach((agent: AgentData) => {
+            agent.tools?.forEach((tool: ToolData) => {
+              tool.apis?.forEach((api: ApiData) => {
                 apiCount++;
                 if (apiCount === nodeNumber) {
-                  const apiKey = Object.keys(api)[0];
-                  if (api[apiKey]?.id) {
-                    nodeId = api[apiKey].id;
-                  }
+                  nodeId = api.id;
                 }
               });
             });
